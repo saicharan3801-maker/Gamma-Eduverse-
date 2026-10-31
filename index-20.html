@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GAMMA EDUVERSE 2.3</title>
+<style>
+:root{--bg:#0a1128;--bg2:#101a3a;--cd:rgba(255,255,255,.06);--bd:rgba(34,211,238,.25);--cy:#22d3ee;--pu:#a78bfa;--tx:#e8eefb;--mu:#a3b3d1;--ok:#34d399;--er:#fb7185;--wa:#fbbf24}
+*{box-sizing:border-box}html,body{margin:0;max-width:100%;overflow-x:hidden}
+body{background:radial-gradient(900px 500px at 85% -10%,rgba(167,139,250,.22),transparent),radial-gradient(800px 500px at -10% 10%,rgba(34,211,238,.15),transparent),var(--bg);color:var(--tx);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;min-height:100vh}
+header{padding:14px 16px 6px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.logo{font-weight:800;font-size:1.25rem;letter-spacing:.04em;background:linear-gradient(90deg,var(--cy),var(--pu));-webkit-background-clip:text;background-clip:text;color:transparent}
+.pill{border:1px solid var(--bd);border-radius:99px;padding:2px 10px;font-size:.78rem;color:var(--mu)}
+nav{display:flex;gap:6px;overflow-x:auto;padding:8px 16px;position:sticky;top:0;z-index:5;background:rgba(10,17,40,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--bd)}
+nav button{flex:none;background:var(--cd);color:var(--mu);border:1px solid transparent;border-radius:12px;padding:8px 12px;font:inherit;font-size:.9rem;cursor:pointer;transition:.2s}
+nav button:hover{color:var(--tx)}nav button.on{color:#06101f;background:linear-gradient(90deg,var(--cy),var(--pu));font-weight:700}
+main{max-width:900px;margin:0 auto;padding:16px}
+h2{margin:0;font-size:1.3rem}h3{margin:0 0 8px;font-size:1.05rem}
+.card{background:var(--cd);border:1px solid var(--bd);border-radius:18px;padding:14px;margin-bottom:12px;box-shadow:0 0 24px rgba(34,211,238,.05);backdrop-filter:blur(8px)}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:12px}
+.stat{cursor:pointer;text-align:left;color:inherit;font:inherit;margin:0}.stat b{display:block;font-size:1.9rem;color:var(--cy)}.stat span{color:var(--mu);font-size:.9rem}
+.btn{background:var(--cd);color:var(--tx);border:1px solid var(--bd);border-radius:12px;padding:9px 14px;font:inherit;cursor:pointer;min-height:42px;transition:.2s}
+.btn:hover{border-color:var(--cy)}.btn.pri{background:linear-gradient(90deg,var(--cy),var(--pu));color:#06101f;font-weight:700;border:0}.btn.dg{border-color:var(--er);color:var(--er)}.btn.sm{padding:5px 10px;min-height:34px;font-size:.88rem}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+label{display:block;margin:10px 0 4px;color:var(--mu);font-size:.9rem}
+input,select,textarea{width:100%;background:rgba(5,10,28,.7);color:var(--tx);border:1px solid var(--bd);border-radius:12px;padding:10px;font:inherit}
+textarea{min-height:80px;resize:vertical}
+:focus-visible{outline:2px solid var(--cy);outline-offset:2px}
+.item{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.itx{min-width:0;overflow-wrap:anywhere}.meta{color:var(--mu);font-size:.88rem}
+.acts{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.item.done{opacity:.6}.item.done b{text-decoration:line-through}
+.tag{display:inline-block;border-radius:99px;padding:1px 9px;font-size:.78rem;border:1px solid var(--pu);color:var(--pu);margin-right:4px}
+.tag.ok{border-color:var(--ok);color:var(--ok)}.tag.late{border-color:var(--er);color:var(--er)}.tag.soon{border-color:var(--wa);color:var(--wa)}
+.empty{text-align:center;color:var(--mu);padding:26px 10px;border:1px dashed var(--bd);border-radius:18px}
+.prog{height:9px;border-radius:9px;background:rgba(255,255,255,.1);overflow:hidden;margin:6px 0}.prog i{display:block;height:100%;background:linear-gradient(90deg,var(--cy),var(--pu))}
+#chat{height:52vh;overflow-y:auto;padding:4px}
+.msg{max-width:88%;padding:9px 12px;border-radius:16px;margin:6px 0;white-space:pre-wrap;overflow-wrap:anywhere}
+.msg.user{margin-left:auto;background:linear-gradient(90deg,#0e7490,#6d28d9)}.msg.ai{background:var(--bg2);border:1px solid var(--bd)}.msg.err{border-color:var(--er)}
+.dots span{animation:b 1s infinite;display:inline-block}.dots span:nth-child(2){animation-delay:.2s}.dots span:nth-child(3){animation-delay:.4s}
+@keyframes b{50%{opacity:.2}}
+#toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:20;display:flex;flex-direction:column;gap:6px;width:min(92vw,420px)}
+.t{padding:10px 14px;border-radius:12px;background:var(--bg2);border:1px solid var(--cy)}.t.err{border-color:var(--er)}.t.ok{border-color:var(--ok)}
+.note{font-size:.85rem;color:var(--mu)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style></head><body>
+<header><span class="logo">GAMMA EDUVERSE</span><span class="pill">Version 2.3</span><span class="pill">AI-powered learning</span></header>
+<nav id="nav" aria-label="Main navigation"></nav>
+<main id="view" aria-live="polite"></main>
+<div id="toast" role="status"></div>
+<noscript><p style="padding:16px">JavaScript is required to run GAMMA EDUVERSE.</p></noscript>
+<script>
+"use strict";
+const $=(s,r=document)=>r.querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+function toast(m,t){const d=document.createElement('div');d.className='t '+(t||'');d.textContent=m;$('#toast').appendChild(d);setTimeout(()=>d.remove(),t==='err'?6000:3000)}
+/* ---------- storage ---------- */
+const K=n=>'ge_'+n;
+function load(n,def){let raw=null;try{raw=localStorage.getItem(K(n));if(raw===null)return def;const v=JSON.parse(raw);if(Array.isArray(v)!==Array.isArray(def)||typeof v!=='object'||v===null)throw new Error('shape');return v}catch(e){try{if(raw!==null)localStorage.setItem(K(n)+'_corrupt_backup',raw)}catch(_){}setTimeout(()=>toast('Saved '+n+' data was unreadable. A backup copy was kept and this section starts empty.','err'),300);return def}}
+function save(n,v){try{localStorage.setItem(K(n),JSON.stringify(v));return true}catch(e){toast('Could not save. Browser storage is full or blocked.','err');return false}}
+const LISTS=['subjects','assignments','projects','exams','timetable','syllabus','marks'];
+const S={profile:load('profile',{}),settings:Object.assign({model:'gemini-2.5-flash',keepKey:false,keepChat:false},load('settings',{}))};
+LISTS.forEach(l=>S[l]=load(l,[]));
+let apiKey='';try{apiKey=localStorage.getItem(K('apikey'))||''}catch(e){}
+let chat=S.settings.keepChat?load('chat',[]):[];
+/* ---------- dates ---------- */
+const pad=n=>String(n).padStart(2,'0');
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())};
+const pd=s=>{const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(s||'');return m?new Date(+m[1],+m[2]-1,+m[3]):null};
+const fmt=s=>{const d=pd(s);return d?d.toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'}):''};
+const days=s=>{const d=pd(s),t=pd(today());return d?Math.round((d-t)/864e5):null};
+function dueTag(s,done){if(!s)return'';const n=days(s);if(done)return'<span class="tag ok">'+esc(fmt(s))+'</span>';const c=n<0?'late':n<=3?'soon':'';const w=n<0?'overdue':n===0?'today':n===1?'tomorrow':'in '+n+' days';return'<span class="tag '+c+'">'+esc(fmt(s))+' ('+w+')</span>'}
+const byDate=k=>(a,b)=>(a[k]||'9999').localeCompare(b[k]||'9999');
+/* ---------- section config ---------- */
+const DAYS=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+const ST3=['Not Started','In Progress','Completed'];
+const F=(k,l,t,o)=>Object.assign({k,l,t:t||'text'},o||{});
+const CFG={
+subjects:{label:'Subjects',one:'subject',fields:[F('name','Subject name','text',{req:1}),F('teacher','Teacher name'),F('notes','Notes','textarea')],
+ title:r=>r.name,meta:r=>(r.teacher?'Teacher: '+esc(r.teacher):'')+(r.notes?'<br>'+esc(r.notes):'')+counts(r.name),sort:a=>a.sort((x,y)=>x.name.localeCompare(y.name))},
+assignments:{label:'Assignments',one:'assignment',fields:[F('title','Title','text',{req:1}),F('subject','Subject','subj'),F('due','Due date','date'),F('notes','Instructions and notes','textarea'),F('status','Status','select',{opts:['Pending','Completed']})],
+ title:r=>r.title,meta:r=>(r.subject?'<span class="tag">'+esc(r.subject)+'</span>':'')+dueTag(r.due,r.status==='Completed')+(r.notes?'<br>'+esc(r.notes):''),
+ done:r=>r.status==='Completed',toggle:r=>{r.status=r.status==='Completed'?'Pending':'Completed'},sort:a=>a.sort((x,y)=>(x.status==='Completed')-(y.status==='Completed')||byDate('due')(x,y))},
+projects:{label:'Projects',one:'project',fields:[F('title','Project title','text',{req:1}),F('subject','Subject or category','subj'),F('desc','Description','textarea'),F('due','Deadline','date'),F('status','Status','select',{opts:ST3})],
+ title:r=>r.title,meta:r=>(r.subject?'<span class="tag">'+esc(r.subject)+'</span>':'')+'<span class="tag '+(r.status==='Completed'?'ok':'')+'">'+esc(r.status)+'</span>'+dueTag(r.due,r.status==='Completed')+(r.desc?'<br>'+esc(r.desc):''),
+ done:r=>r.status==='Completed',sort:a=>a.sort((x,y)=>(x.status==='Completed')-(y.status==='Completed')||byDate('due')(x,y))},
+exams:{label:'Exams',one:'exam',fields:[F('name','Examination name','text',{req:1}),F('subject','Subject','subj'),F('date','Examination date','date',{req:1}),F('topics','Syllabus or topics to revise','textarea'),F('status','Status','select',{opts:['Upcoming','Completed']})],
+ title:r=>r.name,meta:r=>(r.subject?'<span class="tag">'+esc(r.subject)+'</span>':'')+dueTag(r.date,r.status==='Completed')+(r.topics?'<br>Revise: '+esc(r.topics):''),
+ done:r=>r.status==='Completed',sort:a=>a.sort((x,y)=>(x.status==='Completed')-(y.status==='Completed')||byDate('date')(x,y))},
+timetable:{label:'Timetable',one:'timetable entry',fields:[F('day','Day','select',{opts:DAYS,req:1}),F('activity','Activity or subject','text',{req:1}),F('start','Start time or label','text',{req:1,ph:'e.g. 16:00 or Period 3'}),F('end','End time (optional)'),F('notes','Notes (optional)','textarea')],
+ title:r=>r.activity,meta:r=>esc(r.start)+(r.end?' – '+esc(r.end):'')+(r.notes?'<br>'+esc(r.notes):''),group:1},
+syllabus:{label:'Syllabus Tracker',one:'syllabus portion',fields:[F('subject','Subject','subj',{req:1}),F('chapter','Chapter or portion','text',{req:1}),F('status','Status','select',{opts:ST3}),F('notes','Notes (optional)','textarea')],
+ title:r=>r.chapter,meta:r=>'<span class="tag">'+esc(r.subject)+'</span><span class="tag '+(r.status==='Completed'?'ok':'')+'">'+esc(r.status)+'</span>'+(r.notes?'<br>'+esc(r.notes):''),done:r=>r.status==='Completed',extra:()=>syProg(),
+ sort:a=>a.sort((x,y)=>x.subject.localeCompare(y.subject))},
+marks:{label:'Marks and Results',one:'mark',fields:[F('subject','Subject','subj',{req:1}),F('assess','Assessment or examination','text',{req:1}),F('got','Marks obtained','number',{req:1,step:'any',min:0}),F('max','Maximum marks','number',{req:1,step:'any',min:0}),F('date','Date (optional)','date'),F('notes','Notes (optional)','textarea')],
+ title:r=>r.assess+' — '+r.subject,meta:r=>'<span class="tag ok">'+esc(r.got)+' / '+esc(r.max)+' = '+(r.got/r.max*100).toFixed(1)+'%</span>'+(r.date?esc(fmt(r.date)):'')+(r.notes?'<br>'+esc(r.notes):''),
+ validate:d=>{const g=Number(d.got),m=Number(d.max);if(d.got===''||!isFinite(g)||g<0)return'Marks obtained must be a number, 0 or more.';if(d.max===''||!isFinite(m)||m<=0)return'Maximum marks must be a number greater than 0.';if(g>m)return'Marks obtained cannot be greater than the maximum.'},
+ extra:()=>{const a=S.marks;if(!a.length)return'';const p=a.reduce((s,r)=>s+r.got/r.max*100,0)/a.length;return'<div class="card"><b>Average across '+a.length+' result'+(a.length>1?'s':'')+': '+p.toFixed(1)+'%</b></div>'},sort:a=>a.sort((x,y)=>(y.date||'').localeCompare(x.date||''))}
+};
+function counts(n){const c=l=>S[l].filter(r=>(r.subject||'').toLowerCase()===n.toLowerCase()).length;const a=c('assignments'),p=c('projects'),e=c('exams'),s=c('syllabus');return a+p+e+s?'<br>'+a+' assignments · '+p+' projects · '+e+' exams · '+s+' syllabus items':''}
+function syProg(){const a=S.syllabus;if(!a.length)return'';const pc=l=>l.length?Math.round(l.filter(r=>r.status==='Completed').length/l.length*100):0;let h='<div class="card"><h3>Progress: '+pc(a)+'% complete</h3><div class="prog"><i style="width:'+pc(a)+'%"></i></div>';const subs=[...new Set(a.map(r=>r.subject))].sort();subs.forEach(s=>{const l=a.filter(r=>r.subject===s);h+='<div class="meta">'+esc(s)+': '+pc(l)+'% ('+l.filter(r=>r.status==='Completed').length+'/'+l.length+')</div><div class="prog"><i style="width:'+pc(l)+'%"></i></div>'});return h+'</div>'}
+/* ---------- navigation ---------- */
+const NAV=[['dashboard','Dashboard'],['profile','Student Profile'],['subjects','Subjects'],['assignments','Assignments'],['projects','Projects'],['exams','Exams'],['timetable','Timetable'],['syllabus','Syllabus'],['marks','Marks'],['omnix','GAMMA OMNIX'],['settings','Settings']];
+const V={sec:'dashboard',form:false,edit:null};
+function go(sec,form){V.sec=sec;V.form=!!form;V.edit=null;render();window.scrollTo(0,0)}
+function render(){
+ $('#nav').innerHTML=NAV.map(([k,l])=>'<button type="button" data-go="'+k+'" class="'+(V.sec===k?'on':'')+'"'+(V.sec===k?' aria-current="page"':'')+'>'+l+'</button>').join('');
+ const v=$('#view');
+ try{const f={dashboard:vDash,profile:vProfile,omnix:vOmnix,settings:vSettings}[V.sec];v.innerHTML=f?f():vList(V.sec);if(V.sec==='omnix'){const c=$('#chat');if(c)c.scrollTop=c.scrollHeight}}
+ catch(e){console.error(e);v.innerHTML='<div class="card">Something went wrong showing this section. <button class="btn" data-go="dashboard" type="button">Back to dashboard</button></div>'}
+}
+const empty=(t,b)=>'<div class="empty">'+t+(b?'<br><br>'+b:'')+'</div>';
+/* ---------- dashboard ---------- */
+function vDash(){
+ const p=S.profile,total=LISTS.reduce((s,l)=>s+S[l].length,0);
+ let h='<div class="card"><h2>Welcome'+(p.name?', '+esc(p.name):'')+'</h2><div class="meta">GAMMA EDUVERSE — Your Universe of Learning.</div></div>';
+ h+='<div class="grid">'+[['subjects','Subjects'],['assignments','Assignments'],['projects','Projects'],['exams','Exams']].map(([k,l])=>'<button type="button" class="card stat" data-go="'+k+'"><b>'+S[k].length+'</b><span>'+l+'</span></button>').join('')+'</div>';
+ if(!total&&!p.name)h+=empty('Your universe is blank. Start by adding your profile or your first subject.','<div class="row" style="justify-content:center"><button class="btn pri" data-go="profile" type="button">Set up profile</button><button class="btn" data-go="subjects" data-form="1" type="button">Add subject</button></div>');
+ const dl=[].concat(S.assignments.filter(r=>r.due&&r.status!=='Completed').map(r=>({t:r.title,d:r.due,k:'assignments',w:'Assignment'})),S.projects.filter(r=>r.due&&r.status!=='Completed').map(r=>({t:r.title,d:r.due,k:'projects',w:'Project'}))).sort(byDate('d')).slice(0,6);
+ const ex=S.exams.filter(r=>r.date&&r.status!=='Completed'&&days(r.date)>=0).sort(byDate('date')).slice(0,5);
+ h+='<div class="card"><h3>Upcoming deadlines</h3>'+(dl.length?dl.map(x=>'<div class="item"><div class="itx"><b>'+esc(x.t)+'</b><div class="meta">'+x.w+'</div></div><div>'+dueTag(x.d)+'</div></div>').join(''):'<div class="meta">No pending deadlines saved.</div>')+'</div>';
+ h+='<div class="card"><h3>Upcoming examinations</h3>'+(ex.length?ex.map(x=>'<div class="item"><div class="itx"><b>'+esc(x.name)+'</b><div class="meta">'+esc(x.subject||'')+'</div></div><div>'+dueTag(x.date)+'</div></div>').join(''):'<div class="meta">No upcoming exams saved. Reminders show here inside the app only; no notifications are sent.</div>')+'</div>';
+ h+='<div class="card"><h3>Quick actions</h3><div class="row"><button class="btn pri" data-go="omnix" type="button">Ask GAMMA OMNIX</button>'+['subjects','assignments','projects','exams','timetable','syllabus','marks'].map(k=>'<button class="btn" data-go="'+k+'" data-form="1" type="button">+ '+CFG[k].one+'</button>').join('')+'</div></div>';
+ return h}
+/* ---------- profile ---------- */
+function vProfile(){const p=S.profile,b=['ICSE','CBSE','State Board','Other'];
+ return '<div class="bar"><h2>Student Profile</h2></div><form class="card" id="pform"><label for="p_name">Student name</label><input id="p_name" name="name" maxlength="80" value="'+esc(p.name)+'">'+
+ '<label for="p_grade">Class or grade</label><input id="p_grade" name="grade" maxlength="40" value="'+esc(p.grade)+'">'+
+ '<label for="p_school">School name</label><input id="p_school" name="school" maxlength="120" value="'+esc(p.school)+'">'+
+ '<label for="p_board">Education board</label><select id="p_board" name="board"><option value="">Select board</option>'+b.map(x=>'<option'+(p.board===x?' selected':'')+'>'+x+'</option>').join('')+'</select>'+
+ '<label for="p_goals">Learning goals</label><textarea id="p_goals" name="goals" maxlength="1000">'+esc(p.goals)+'</textarea><br><button class="btn pri" type="submit">Save profile</button></form>'}
+/* ---------- generic list ---------- */
+function formHtml(sec){const c=CFG[sec],r=V.edit?S[sec].find(x=>x.id===V.edit)||{}:{};
+ const dl=S.subjects.map(s=>'<option value="'+esc(s.name)+'">').join('');
+ return '<form class="card" id="lform" data-sec="'+sec+'"><h3>'+(V.edit?'Edit ':'Add ')+c.one+'</h3>'+c.fields.map(f=>{const id='f_'+f.k,val=r[f.k]!=null?r[f.k]:(f.t==='select'?f.opts[0]:'');let i;
+  if(f.t==='textarea')i='<textarea id="'+id+'" name="'+f.k+'" maxlength="2000">'+esc(val)+'</textarea>';
+  else if(f.t==='select')i='<select id="'+id+'" name="'+f.k+'">'+f.opts.map(o=>'<option'+(o===val?' selected':'')+'>'+o+'</option>').join('')+'</select>';
+  else if(f.t==='subj')i='<input id="'+id+'" name="'+f.k+'" list="subjlist" maxlength="80" value="'+esc(val)+'" placeholder="Type or pick a saved subject"><datalist id="subjlist">'+dl+'</datalist>';
+  else i='<input id="'+id+'" name="'+f.k+'" type="'+f.t+'" maxlength="120" value="'+esc(val)+'"'+(f.step?' step="'+f.step+'"':'')+(f.min!=null?' min="'+f.min+'"':'')+(f.ph?' placeholder="'+esc(f.ph)+'"':'')+' inputmode="'+(f.t==='number'?'decimal':'text')+'">';
+  return'<label for="'+id+'">'+f.l+(f.req?' *':'')+'</label>'+i}).join('')+'<br><div class="row"><button class="btn pri" type="submit">Save '+c.one+'</button><button class="btn" type="button" data-a="cancel">Cancel</button></div></form>'}
+function cardHtml(sec,r){const c=CFG[sec];return'<article class="card item'+(c.done&&c.done(r)?' done':'')+'"><div class="itx"><b>'+esc(c.title(r))+'</b><div class="meta">'+c.meta(r)+'</div></div><div class="acts">'+(c.toggle?'<button class="btn sm" type="button" data-a="toggle" data-id="'+r.id+'">'+(c.done(r)?'Reopen':'Done')+'</button>':'')+'<button class="btn sm" type="button" data-a="edit" data-id="'+r.id+'">Edit</button><button class="btn sm dg" type="button" data-a="del" data-id="'+r.id+'">Delete</button></div></article>'}
+function vList(sec){const c=CFG[sec],items=c.sort?c.sort([...S[sec]]):[...S[sec]];
+ let h='<div class="bar"><h2>'+c.label+'</h2><button class="btn pri" type="button" data-a="new">+ Add '+c.one+'</button></div>'+(V.form?formHtml(sec):'')+(c.extra?c.extra():'');
+ if(!items.length)return h+empty('No '+c.label.toLowerCase()+' saved yet.','<button class="btn" type="button" data-a="new">Add your first '+c.one+'</button>');
+ if(c.group)return h+DAYS.map(d=>{const l=items.filter(r=>r.day===d).sort((a,b)=>a.start.localeCompare(b.start));return l.length?'<h3>'+d+'</h3>'+l.map(r=>cardHtml(sec,r)).join(''):''}).join('');
+ return h+items.map(r=>cardHtml(sec,r)).join('')}
+/* ---------- OMNIX ---------- */
+const QP=['Explain this topic simply','Make a revision plan','Give me 5 MCQs with answers','Help plan my study timetable'];
+function vOmnix(){
+ return '<div class="bar"><h2>GAMMA OMNIX</h2><button class="btn sm" type="button" data-a="clearchat">Clear chat</button></div>'+
+ '<div class="card"><div id="chat" aria-label="Chat messages">'+(chat.length?chat.map(msgHtml).join(''):'<div class="meta">Ask a study question, or type a command like <b>open exams</b> or <b>add assignment</b>. Commands work without an API key; study answers need a Gemini key in Settings.</div>')+'</div>'+
+ '<div class="row" style="margin:8px 0">'+QP.map(q=>'<button class="btn sm" type="button" data-q="'+esc(q)+'">'+esc(q)+'</button>').join('')+'</div>'+
+ '<form id="cform" class="row" style="flex-wrap:nowrap"><label for="cin" style="position:absolute;left:-9999px">Message</label><input id="cin" autocomplete="off" maxlength="2000" placeholder="Message GAMMA OMNIX"><button class="btn pri" type="submit">Send</button></form></div>'}
+const msgHtml=m=>'<div class="msg '+m.role+(m.err?' err':'')+'">'+esc(m.text)+'</div>';
+let busy=false;
+const NAVMAP={dashboard:['dashboard','home'],profile:['profile','student profile'],subjects:['subjects','subject'],assignments:['assignments','assignment','homework'],projects:['projects','project'],exams:['exams','exam','examinations','examination'],timetable:['timetable','schedule'],syllabus:['syllabus','syllabus tracker'],marks:['marks','results','marks and results','mark'],omnix:['gamma omnix','omnix','tutor','chat'],settings:['settings','setting']};
+const ADDMAP={subjects:['subject'],assignments:['assignment','homework'],projects:['project'],exams:['exam','examination'],timetable:['timetable entry','timetable','class','period'],syllabus:['syllabus portion','syllabus','chapter'],marks:['mark','marks','result']};
+function findIn(map,t){t=t.trim();for(const k in map)if(map[k].includes(t))return k;for(const k in map)for(const a of map[k])if(t.startsWith(a))return k;return null}
+function localCmd(text){
+ const t=text.toLowerCase().trim().replace(/[.!?]+$/,'').replace(/^please\s+/,'');
+ let m=/^(?:open|go to|show|take me to)\s+(?:the\s+|my\s+)?(.+)$/.exec(t);
+ if(m){const k=findIn(NAVMAP,m[1]);if(k){return{say:'Opening '+NAV.find(n=>n[0]===k)[1]+'.',run:()=>go(k)}}}
+ m=/^(?:add|new|create)\s+(?:a\s+|an\s+|new\s+)?(.+)$/.exec(t);
+ if(m){const k=findIn(ADDMAP,m[1]);if(k)return{say:'Opening the form to add a '+CFG[k].one+'. Nothing is saved until you fill it in and press Save.',run:()=>go(k,true)}}
+ if(/^(?:delete|remove|clear|erase)\b/.test(t))return{say:'I do not delete records from chat. Open the section and use Delete on the item (you will be asked to confirm), or use Settings to clear all data.',run:null};
+ return null}
+function ctx(){const p=S.profile,L=[];
+ L.push('You are GAMMA OMNIX, a friendly study tutor inside GAMMA EDUVERSE. Explain clearly'+(p.grade?' for a student in '+p.grade:'')+'. Use only the saved student information below; if something is not listed, it has not been entered, so do not guess or invent it. You cannot change app data; tell the student to use the app sections or commands such as "open exams" or "add assignment".');
+ ['name','grade','school','board','goals'].forEach(k=>{if(p[k])L.push('Student '+k+': '+p[k])});
+ if(S.subjects.length)L.push('Subjects: '+S.subjects.map(s=>s.name).join(', '));
+ const a=S.assignments.filter(r=>r.status!=='Completed').slice(0,8).map(r=>r.title+(r.due?' (due '+r.due+')':''));if(a.length)L.push('Pending assignments: '+a.join('; '));
+ const e=S.exams.filter(r=>r.status!=='Completed').slice(0,6).map(r=>r.name+(r.subject?' ['+r.subject+']':'')+(r.date?' on '+r.date:''));if(e.length)L.push('Upcoming exams: '+e.join('; '));
+ L.push('Today is '+today()+'.');return L.join('\n')}
+function geminiErr(status,msg){
+ if(status===400&&/api key/i.test(msg))return'Gemini rejected the API key. Check it in Settings.';
+ if(status===400)return'Gemini could not process the request: '+msg;
+ if(status===401||status===403)return'Access denied. The API key may be invalid, restricted, or not allowed for this model.';
+ if(status===404)return'Model not found. Pick a different model in Settings.';
+ if(status===429)return'Rate limit or quota reached. Wait a moment and try again.';
+ if(status>=500)return'Gemini is temporarily unavailable. Try again shortly.';
+ return'Request failed ('+status+'): '+msg}
+async function callGemini(contents,system){
+ if(!apiKey)throw new Error('NOKEY');
+ const ctl=new AbortController(),to=setTimeout(()=>ctl.abort(),40000);
+ let r;
+ try{r=await fetch('https://generativelanguage.googleapis.com/v1beta/models/'+encodeURIComponent(S.settings.model)+':generateContent',{method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':apiKey},body:JSON.stringify(system?{systemInstruction:{parts:[{text:system}]},contents}:{contents}),signal:ctl.signal})}
+ catch(e){throw new Error(e.name==='AbortError'?'The request timed out. Check your connection and try again.':'Network error. Check your internet connection.')}
+ finally{clearTimeout(to)}
+ let d=null;try{d=await r.json()}catch(e){}
+ if(!r.ok)throw new Error(geminiErr(r.status,(d&&d.error&&d.error.message)||r.statusText||''));
+ const txt=d&&d.candidates&&d.candidates[0]&&d.candidates[0].content&&d.candidates[0].content.parts?d.candidates[0].content.parts.map(p=>p.text||'').join('').trim():'';
+ if(!txt){const br=d&&d.promptFeedback&&d.promptFeedback.blockReason;throw new Error(br?'The request was blocked ('+br+'). Try rephrasing.':'Gemini returned an empty response. Try again.')}
+ return txt}
+function saveChat(){if(S.settings.keepChat)save('chat',chat.slice(-60))}
+async function send(text){
+ text=text.trim();if(!text||busy)return;
+ chat.push({role:'user',text,local:false});
+ const lc=localCmd(text);
+ if(lc){chat[chat.length-1].local=true;chat.push({role:'ai',text:lc.say,local:true});saveChat();if(lc.run)lc.run();else render();return}
+ busy=true;saveChat();render();
+ const c=$('#chat');if(c){c.insertAdjacentHTML('beforeend','<div class="msg ai dots" id="typing"><span>●</span><span>●</span><span>●</span></div>');c.scrollTop=c.scrollHeight}
+ try{
+  const contents=chat.filter(m=>!m.local&&!m.err).slice(-12).map(m=>({role:m.role==='user'?'user':'model',parts:[{text:m.text}]}));
+  const ans=await callGemini(contents,ctx());chat.push({role:'ai',text:ans})
+ }catch(e){chat.push({role:'ai',err:1,local:true,text:e.message==='NOKEY'?'No Gemini API key is set. Add one in Settings to get study answers. Commands like "open exams" still work without a key.':e.message})}
+ busy=false;saveChat();if(V.sec==='omnix')render()}
+/* ---------- settings ---------- */
+let keyStatus='';
+function vSettings(){const s=S.settings,M=['gemini-2.5-flash','gemini-2.5-flash-lite','gemini-2.5-pro'];
+ return '<div class="bar"><h2>Settings</h2></div><form class="card" id="sform"><h3>Gemini API</h3>'+
+ '<label for="s_key">Gemini API key</label><div class="row" style="flex-wrap:nowrap"><input id="s_key" type="password" autocomplete="off" value="'+esc(apiKey)+'" placeholder="Paste your key"><button class="btn" type="button" data-a="showkey">Show</button></div>'+
+ '<label for="s_model">Model</label><input id="s_model" list="mlist" value="'+esc(s.model)+'"><datalist id="mlist">'+M.map(m=>'<option value="'+m+'">').join('')+'</datalist>'+
+ '<label><input type="checkbox" id="s_keep" style="width:auto"'+(s.keepKey?' checked':'')+'> Save the key on this device</label>'+
+ '<label><input type="checkbox" id="s_chat" style="width:auto"'+(s.keepChat?' checked':'')+'> Keep chat history on this device</label>'+
+ '<p class="note">localStorage is not encrypted. Scripts in this browser or anyone with access to this device can read a saved key. Leave the box unchecked to keep the key only until you close the page. For a public website, use a backend that keeps the key secret. Data and key stay in this browser on this device and do not sync to other browsers or devices.</p>'+
+ '<div class="row"><button class="btn pri" type="submit">Save settings</button><button class="btn" type="button" data-a="test">Test connection</button></div><p id="kstat" class="note">Status: '+esc(keyStatus||(apiKey?'Key set, not tested.':'No API key set.'))+'</p></form>'+
+ '<div class="card"><h3>Academic data</h3><p class="note">Clearing removes your profile and every record on this device. This cannot be undone.</p><button class="btn dg" type="button" data-a="clearall">Clear academic data</button></div>'+
+ '<div class="card"><h3>About</h3><p class="note">GAMMA EDUVERSE 2.3 — Your Universe of Learning.<br>Works offline for all records and commands. Study answers from GAMMA OMNIX need internet and a Gemini key. Not yet included: voice, reminders, flashcards, file attachments, charts, export/import, cloud sync.</p></div>'}
+/* ---------- events ---------- */
+document.addEventListener('click',e=>{
+ const g=e.target.closest('[data-go]');if(g){go(g.dataset.go,g.dataset.form==='1');return}
+ const q=e.target.closest('[data-q]');if(q){const i=$('#cin');if(i){i.value=q.dataset.q;i.focus()}return}
+ const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a,sec=V.sec,id=b.dataset.id;
+ if(a==='new'){V.form=true;V.edit=null;render();const f=$('#lform');if(f)f.scrollIntoView({behavior:'smooth'})}
+ else if(a==='cancel'){V.form=false;V.edit=null;render()}
+ else if(a==='edit'){V.form=true;V.edit=id;render();const f=$('#lform');if(f)f.scrollIntoView({behavior:'smooth'})}
+ else if(a==='toggle'){const r=S[sec].find(x=>x.id===id);if(r){CFG[sec].toggle(r);if(save(sec,S[sec]))toast('Updated.','ok');render()}}
+ else if(a==='del'){const r=S[sec].find(x=>x.id===id);if(r&&confirm('Delete "'+CFG[sec].title(r)+'"? This cannot be undone.')){S[sec]=S[sec].filter(x=>x.id!==id);save(sec,S[sec]);toast('Deleted.','ok');render()}}
+ else if(a==='clearchat'){chat=[];saveChat();if(S.settings.keepChat)save('chat',[]);render()}
+ else if(a==='showkey'){const i=$('#s_key');i.type=i.type==='password'?'text':'password';b.textContent=i.type==='password'?'Show':'Hide'}
+ else if(a==='test'){testKey(b)}
+ else if(a==='clearall'){if(confirm('Clear your profile and ALL academic records on this device? This cannot be undone.')){S.profile={};LISTS.forEach(l=>{S[l]=[]});save('profile',{});LISTS.forEach(l=>save(l,[]));toast('Academic data cleared.','ok');render()}}
+});
+async function testKey(b){const i=$('#s_key');const k=i.value.trim();if(!k){keyStatus='Enter a key first.';render();return}
+ const old=apiKey,oldM=S.settings.model;apiKey=k;S.settings.model=($('#s_model').value||'').trim()||oldM;b.disabled=true;b.textContent='Testing…';
+ try{await callGemini([{role:'user',parts:[{text:'Reply with the word OK.'}]}]);keyStatus='Connected. The key and model work.'}catch(e){keyStatus=e.message}
+ apiKey=old;S.settings.model=oldM;if(V.sec==='settings'){const kk=$('#s_key').value,mm=$('#s_model').value;render();$('#s_key').value=kk;$('#s_model').value=mm}}
+document.addEventListener('submit',e=>{
+ e.preventDefault();const f=e.target;
+ if(f.id==='pform'){const d=Object.fromEntries(new FormData(f));Object.keys(d).forEach(k=>d[k]=String(d[k]).trim());if(save('profile',d)){S.profile=d;toast('Profile saved.','ok')}}
+ else if(f.id==='lform'){const sec=f.dataset.sec,c=CFG[sec],d=Object.fromEntries(new FormData(f));Object.keys(d).forEach(k=>d[k]=String(d[k]).trim());
+  for(const fl of c.fields)if(fl.req&&!d[fl.k]){toast('Please fill in: '+fl.l+'.','err');return}
+  const er=c.validate&&c.validate(d);if(er){toast(er,'err');return}
+  if(c.fields.some(x=>x.k==='got')){d.got=Number(d.got);d.max=Number(d.max)}
+  const list=S[sec].slice();
+  if(V.edit){const i=list.findIndex(x=>x.id===V.edit);if(i<0){toast('That item no longer exists.','err');return}list[i]=Object.assign({},list[i],d)}else list.push(Object.assign({id:uid()},d));
+  if(save(sec,list)){S[sec]=list;toast((V.edit?'Updated ':'Saved ')+c.one+'.','ok');V.form=false;V.edit=null;render()}}
+ else if(f.id==='sform'){const k=$('#s_key').value.trim(),m=$('#s_model').value.trim();if(!m){toast('Enter a model name.','err');return}
+  const ns=Object.assign({},S.settings,{model:m,keepKey:$('#s_keep').checked,keepChat:$('#s_chat').checked});
+  if(!save('settings',ns))return;S.settings=ns;apiKey=k;keyStatus='';
+  try{if(ns.keepKey&&k)localStorage.setItem(K('apikey'),k);else localStorage.removeItem(K('apikey'))}catch(err){toast('Could not store the key on this device.','err')}
+  if(ns.keepChat)save('chat',chat.slice(-60));else try{localStorage.removeItem(K('chat'))}catch(err){}
+  toast('Settings saved.','ok')}
+ else if(f.id==='cform'){const i=$('#cin'),t=i.value;i.value='';send(t)}
+});
+render();
+</script></body></html>
